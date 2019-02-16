@@ -1,0 +1,8 @@
+server:
+  port: 8181
+
+spring:
+  resources:
+    static-locations: file://./static/
+  jackson:
+    default-property-inclusion: non_null
