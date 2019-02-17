@@ -28,9 +28,10 @@
     methods: {
       render(data) {
         let lSVGInAString = smcat.render(data, {
-          inputType: "smcat-json", //unknown value actually leads to pass through
+          inputType: "json",
           outputType: "svg",
-          direction: "left-right"
+          direction: "left-right",
+          engine: "dot",
         });
         this.stamaSVG = lSVGInAString;
         document.getElementById("svg-stama").innerHTML = lSVGInAString;
