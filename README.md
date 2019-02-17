@@ -9,4 +9,4 @@ Showing the current state of your Spring state machine with State Machine Cat
 
 ## Output
 
-![Model](rendering.jpg)
+![Model](rendering.png)
