@@ -1,6 +1,7 @@
 package h32.ssmrender
 
 import org.springframework.statemachine.StateMachine
+import org.springframework.statemachine.state.PseudoStateKind
 import org.springframework.statemachine.state.State as ssmState
 import org.springframework.statemachine.transition.Transition as ssmTransition
 
@@ -28,13 +29,25 @@ object ScJsonFactory {
         )
     }
 
-    private fun convert(state: ssmState<String, String>): State {
-        return State(
-                name = state.id,
-                statemachine = Statemachine(
-                        state.states.minus(state).map { convert(it) }
-                ),
-                color = if (state.id == "State5Parent" || state.id == "State3Child") "green" else "black"
-        )
+    private fun convert(state: ssmState<String, String>): Node {
+        return when (state.pseudoState?.kind) {
+            PseudoStateKind.INITIAL -> Initial(state.id)
+            PseudoStateKind.END -> Final(state.id)
+            PseudoStateKind.CHOICE -> Choice(state.id)
+            PseudoStateKind.JUNCTION -> Choice(state.id)
+            PseudoStateKind.HISTORY_DEEP -> TODO("HISTORY_DEEP not handled yet")
+            PseudoStateKind.HISTORY_SHALLOW -> TODO("HISTORY_SHALLOW not handled yet")
+            PseudoStateKind.FORK -> TODO("FORK not handled yet")
+            PseudoStateKind.JOIN -> TODO("JOIN not handled yet")
+            PseudoStateKind.ENTRY -> TODO("ENTRY not handled yet")
+            PseudoStateKind.EXIT -> TODO("EXIT not handled yet")
+            null -> State(
+                    name = state.id,
+                    statemachine = Statemachine(
+                            state.states.minus(state).map { convert(it) }
+                    ),
+                    color = if (state.id == "State5Parent" || state.id == "State3Child") "green" else "black"
+            )
+        }
     }
 }
