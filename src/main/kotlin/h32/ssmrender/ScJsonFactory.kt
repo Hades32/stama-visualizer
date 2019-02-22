@@ -1,6 +1,8 @@
 package h32.ssmrender
 
 import org.springframework.statemachine.StateMachine
+import org.springframework.statemachine.action.Action
+import org.springframework.statemachine.guard.Guard
 import org.springframework.statemachine.state.PseudoStateKind
 import org.springframework.statemachine.state.State as ssmState
 import org.springframework.statemachine.transition.Transition as ssmTransition
@@ -18,16 +20,30 @@ object ScJsonFactory {
 
     private fun convert(transition: ssmTransition<String, String>): Transition {
         val event = transition.trigger?.event ?: ""
+        val guard = pretty(transition.guard)
+        val action = pretty(transition.actions)
         return Transition(
                 from = transition.source.id,
                 to = transition.target.id,
                 event = event,
-                label = "$event[]/" //TODO,
+                label = "$event$guard$action"
                 //action =
                 //color =
                 //cond =
         )
     }
+
+    private fun pretty(actions: Collection<Action<String, String>>): Any {
+        return when {
+            actions.isNotEmpty() ->
+                actions.joinToString(prefix = "/", separator = ",")
+            else ->
+                ""
+        }
+    }
+
+    private fun pretty(guard: Guard<String, String>?) =
+        guard?.let { "[$it]" } ?: ""
 
     private fun convert(state: ssmState<String, String>): Node {
         return when (state.pseudoState?.kind) {

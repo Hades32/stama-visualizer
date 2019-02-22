@@ -6,15 +6,25 @@
   <packagedElement xmi:type="uml:StateMachine" xmi:id="_qo52gDImEemgLttF6XH3pg" name="StateMachine2">
     <region xmi:type="uml:Region" xmi:id="_rlcXQDImEemgLttF6XH3pg" name="Region1">
       <transition xmi:type="uml:Transition" xmi:id="_3dh_kDImEemgLttF6XH3pg" source="_vCCZ8DImEemgLttF6XH3pg" target="_wisUYDImEemgLttF6XH3pg"/>
-      <transition xmi:type="uml:Transition" xmi:id="_6RdfwDImEemgLttF6XH3pg" source="_wisUYDImEemgLttF6XH3pg" target="_0dCDADImEemgLttF6XH3pg"/>
+      <transition xmi:type="uml:Transition" xmi:id="_6RdfwDImEemgLttF6XH3pg" source="_wisUYDImEemgLttF6XH3pg" target="_0dCDADImEemgLttF6XH3pg">
+        <trigger xmi:type="uml:Trigger" xmi:id="_O3x88DbcEemB7Oe3rynlhw" name="DoIt" event="_OsNmIDbcEemB7Oe3rynlhw"/>
+      </transition>
       <transition xmi:type="uml:Transition" xmi:id="_8emswDImEemgLttF6XH3pg" guard="_R5v_sDInEemgLttF6XH3pg" source="_0dCDADImEemgLttF6XH3pg" target="_xLxtoDImEemgLttF6XH3pg">
         <ownedRule xmi:type="uml:Constraint" xmi:id="_R5v_sDInEemgLttF6XH3pg" name="IsRed">
-          <specification xmi:type="uml:OpaqueExpression" xmi:id="_R5wmwDInEemgLttF6XH3pg" name="IsRedExp" language="" body=""/>
+          <specification xmi:type="uml:OpaqueExpression" xmi:id="_R5wmwDInEemgLttF6XH3pg" name="IsRedExp">
+            <language>bean</language>
+            <body>IsRedGuard</body>
+          </specification>
         </ownedRule>
       </transition>
       <transition xmi:type="uml:Transition" xmi:id="_9gJCQDImEemgLttF6XH3pg" source="_0dCDADImEemgLttF6XH3pg" target="_xndkEDImEemgLttF6XH3pg"/>
       <transition xmi:type="uml:Transition" xmi:id="_-4y3QDImEemgLttF6XH3pg" source="_xLxtoDImEemgLttF6XH3pg" target="_1sW84DImEemgLttF6XH3pg"/>
-      <transition xmi:type="uml:Transition" xmi:id="__yXjkDImEemgLttF6XH3pg" source="_xndkEDImEemgLttF6XH3pg" target="_1sW84DImEemgLttF6XH3pg"/>
+      <transition xmi:type="uml:Transition" xmi:id="__yXjkDImEemgLttF6XH3pg" source="_xndkEDImEemgLttF6XH3pg" target="_1sW84DImEemgLttF6XH3pg">
+        <effect xmi:type="uml:OpaqueBehavior" xmi:id="_alh9gDbcEemB7Oe3rynlhw" name="SomeEffect">
+          <language>bean</language>
+          <body>SomeEffectAction</body>
+        </effect>
+      </transition>
       <transition xmi:type="uml:Transition" xmi:id="_AvU7EDInEemgLttF6XH3pg" source="_1sW84DImEemgLttF6XH3pg" target="_ywIcUDImEemgLttF6XH3pg"/>
       <transition xmi:type="uml:Transition" xmi:id="_FvdNEDInEemgLttF6XH3pg" source="_ywIcUDImEemgLttF6XH3pg" target="_zLzrsDImEemgLttF6XH3pg"/>
       <subvertex xmi:type="uml:Pseudostate" xmi:id="_vCCZ8DImEemgLttF6XH3pg" name="Initial1"/>
@@ -37,4 +47,6 @@
       <subvertex xmi:type="uml:Pseudostate" xmi:id="_1sW84DImEemgLttF6XH3pg" name="Choice8" kind="choice"/>
     </region>
   </packagedElement>
+  <packagedElement xmi:type="uml:Signal" xmi:id="_Ofc8gDbcEemB7Oe3rynlhw" name="DoItSignal"/>
+  <packagedElement xmi:type="uml:SignalEvent" xmi:id="_OsNmIDbcEemB7Oe3rynlhw" name="DoItSignalEvent" signal="_Ofc8gDbcEemB7Oe3rynlhw"/>
 </uml:Model>
