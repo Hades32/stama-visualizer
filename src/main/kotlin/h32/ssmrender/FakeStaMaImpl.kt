@@ -15,4 +15,8 @@ class Stubs {
     fun SomeEffectAction() : Action<String, String> {
         return Action { }
     }
+    @Bean
+    fun SomeAction() : Action<String, String> {
+        return Action { }
+    }
 }

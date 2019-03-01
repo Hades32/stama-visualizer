@@ -33,13 +33,31 @@
       <subvertex xmi:type="uml:State" xmi:id="_xndkEDImEemgLttF6XH3pg" name="State4"/>
       <subvertex xmi:type="uml:State" xmi:id="_ywIcUDImEemgLttF6XH3pg" name="State5Parent">
         <region xmi:type="uml:Region" xmi:id="_KspDUDIoEemgLttF6XH3pg" name="Region1">
-          <transition xmi:type="uml:Transition" xmi:id="_MvLi0DIoEemgLttF6XH3pg" source="_KsyNQDIoEemgLttF6XH3pg" target="_LKs4UDIoEemgLttF6XH3pg"/>
+          <transition xmi:type="uml:Transition" xmi:id="_MvLi0DIoEemgLttF6XH3pg" source="_KsyNQDIoEemgLttF6XH3pg" target="_LKs4UDIoEemgLttF6XH3pg">
+            <trigger xmi:type="uml:Trigger" xmi:id="_FnZIgDwzEemvWMgJUI_8hQ" name="SubWait" event="_VV2lcDwzEemvWMgJUI_8hQ"/>
+          </transition>
           <transition xmi:type="uml:Transition" xmi:id="_OTQksDIoEemgLttF6XH3pg" source="_LKs4UDIoEemgLttF6XH3pg" target="_LrG2sDIoEemgLttF6XH3pg"/>
-          <transition xmi:type="uml:Transition" xmi:id="_PpO5IDIoEemgLttF6XH3pg" source="_LrG2sDIoEemgLttF6XH3pg" target="_MHxkkDIoEemgLttF6XH3pg"/>
+          <transition xmi:type="uml:Transition" xmi:id="_PpO5IDIoEemgLttF6XH3pg" source="_LrG2sDIoEemgLttF6XH3pg" target="_MHxkkDIoEemgLttF6XH3pg">
+            <trigger xmi:type="uml:Trigger" xmi:id="_NaHCcDwpEemvWMgJUI_8hQ" name="EndIt" event="_NO_XkDwpEemvWMgJUI_8hQ"/>
+          </transition>
           <subvertex xmi:type="uml:Pseudostate" xmi:id="_KsyNQDIoEemgLttF6XH3pg" name="Initial1Child"/>
-          <subvertex xmi:type="uml:State" xmi:id="_LKs4UDIoEemgLttF6XH3pg" name="State2Child"/>
+          <subvertex xmi:type="uml:State" xmi:id="_LKs4UDIoEemgLttF6XH3pg" name="State2Child">
+            <entry xmi:type="uml:OpaqueBehavior" xmi:id="_ofSw8DwyEemvWMgJUI_8hQ" name="SomeEntry">
+              <language>bean</language>
+              <body>SomeAction</body>
+            </entry>
+          </subvertex>
           <subvertex xmi:type="uml:State" xmi:id="_LrG2sDIoEemgLttF6XH3pg" name="State3Child"/>
           <subvertex xmi:type="uml:FinalState" xmi:id="_MHxkkDIoEemgLttF6XH3pg" name="FinalState4Child"/>
+        </region>
+        <region xmi:type="uml:Region" xmi:id="_PUJtQDwpEemvWMgJUI_8hQ" name="Region2">
+          <transition xmi:type="uml:Transition" xmi:id="_ai6rwDwpEemvWMgJUI_8hQ" source="_XHwzgDwpEemvWMgJUI_8hQ" target="_WigxYDwpEemvWMgJUI_8hQ"/>
+          <transition xmi:type="uml:Transition" xmi:id="_1-0DYDwtEemvWMgJUI_8hQ" source="_WigxYDwpEemvWMgJUI_8hQ" target="_06KvgDwtEemvWMgJUI_8hQ">
+            <trigger xmi:type="uml:Trigger" xmi:id="_6FrLEDwtEemvWMgJUI_8hQ" name="EndIt2" event="_NO_XkDwpEemvWMgJUI_8hQ"/>
+          </transition>
+          <subvertex xmi:type="uml:State" xmi:id="_WigxYDwpEemvWMgJUI_8hQ" name="ParaState1"/>
+          <subvertex xmi:type="uml:Pseudostate" xmi:id="_XHwzgDwpEemvWMgJUI_8hQ" name="Initial2"/>
+          <subvertex xmi:type="uml:FinalState" xmi:id="_06KvgDwtEemvWMgJUI_8hQ" name="FinalState4"/>
         </region>
       </subvertex>
       <subvertex xmi:type="uml:FinalState" xmi:id="_zLzrsDImEemgLttF6XH3pg" name="FinalState6"/>
@@ -49,4 +67,8 @@
   </packagedElement>
   <packagedElement xmi:type="uml:Signal" xmi:id="_Ofc8gDbcEemB7Oe3rynlhw" name="DoItSignal"/>
   <packagedElement xmi:type="uml:SignalEvent" xmi:id="_OsNmIDbcEemB7Oe3rynlhw" name="DoItSignalEvent" signal="_Ofc8gDbcEemB7Oe3rynlhw"/>
+  <packagedElement xmi:type="uml:Signal" xmi:id="_NCX34DwpEemvWMgJUI_8hQ" name="EndItSignal"/>
+  <packagedElement xmi:type="uml:SignalEvent" xmi:id="_NO_XkDwpEemvWMgJUI_8hQ" name="EndItEvent" signal="_NCX34DwpEemvWMgJUI_8hQ"/>
+  <packagedElement xmi:type="uml:Signal" xmi:id="_VJe9YDwzEemvWMgJUI_8hQ" name="SubWaitGoSignal"/>
+  <packagedElement xmi:type="uml:SignalEvent" xmi:id="_VV2lcDwzEemvWMgJUI_8hQ" name="SubWaitGoEvent" signal="_VJe9YDwzEemvWMgJUI_8hQ"/>
 </uml:Model>

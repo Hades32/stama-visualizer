@@ -3,16 +3,23 @@ package h32.ssmrender
 import org.springframework.statemachine.StateMachine
 import org.springframework.statemachine.action.Action
 import org.springframework.statemachine.guard.Guard
+import org.springframework.statemachine.region.Region
 import org.springframework.statemachine.state.PseudoStateKind
+import org.springframework.statemachine.state.RegionState
 import org.springframework.statemachine.state.State as ssmState
 import org.springframework.statemachine.transition.Transition as ssmTransition
 
 object ScJsonFactory {
+    private val anonFuncMatch = Regex("\\\$([^$]+)\\\$")
+    private val instanceMatch = Regex("([^.]+)@")
+    private val classMatch = Regex("([^.]+)\$")
+
     fun from(stateMachine: StateMachine<String, String>): ScJsonDto {
+        val activeStates = stateMachine.state.ids
         return ScJsonDto(
                 states = stateMachine.states
                         .plus(stateMachine.initialState)
-                        .map { convert(it) },
+                        .map { convert(it, activeStates) },
                 transitions = stateMachine.transitions
                         .map { convert(it) }
         )
@@ -36,18 +43,37 @@ object ScJsonFactory {
     private fun pretty(actions: Collection<Action<String, String>>): Any {
         return when {
             actions.isNotEmpty() ->
-                actions.joinToString(prefix = "/", separator = ",")
+                actions.joinToString(prefix = "/", separator = ",") { pretty(it) }
             else ->
                 ""
         }
     }
 
-    private fun pretty(guard: Guard<String, String>?) =
-        guard?.let { "[$it]" } ?: ""
+    private fun pretty(it: Action<String, String>): String {
+        return extractName(it.toString())
+    }
 
-    private fun convert(state: ssmState<String, String>): Node {
+    private fun pretty(guard: Guard<String, String>?): String {
+        return guard?.toString()?.let { extractName(it) }?.let { "[$it]" } ?: ""
+    }
+
+    private fun extractName(s: String): String {
+        val match = anonFuncMatch.find(s) ?: instanceMatch.find(s) ?: classMatch.find(s)
+        return match?.groupValues?.elementAtOrNull(1) ?: s
+    }
+
+    private fun convert(region: Region<String, String>, activeStates: Collection<String>): Node {
+        return State(
+                name = region.id ?: region.uuid.toString(),
+                statemachine = Statemachine(
+                        region.states.map { convert(it, activeStates) }
+                )
+        )
+    }
+
+    private fun convert(state: ssmState<String, String>, activeStates: Collection<String>): Node {
         return when (state.pseudoState?.kind) {
-            PseudoStateKind.INITIAL -> Initial(state.id)
+            PseudoStateKind.INITIAL -> createInitial(state, activeStates)
             PseudoStateKind.END -> Final(state.id)
             PseudoStateKind.CHOICE -> Choice(state.id)
             PseudoStateKind.JUNCTION -> Choice(state.id)
@@ -59,11 +85,36 @@ object ScJsonFactory {
             PseudoStateKind.EXIT -> TODO("EXIT not handled yet")
             null -> State(
                     name = state.id,
-                    statemachine = Statemachine(
-                            state.states.minus(state).map { convert(it) }
-                    ),
-                    color = if (state.id == "State5Parent" || state.id == "State3Child") "green" else "black"
+                    statemachine = if (state.states.size > 1) Statemachine(
+                            state.states.minus(state).map { convert(it, activeStates) }
+                    ) else null,
+                    color = getColor(state, activeStates)
             )
         }
     }
+
+    private fun createInitial(state: org.springframework.statemachine.state.State<String, String>, activeStates: Collection<String>): Node {
+        if (state is RegionState) {
+            return StateWithRegions(
+                    name = state.id,
+                    color = getColor(state, activeStates),
+                    statemachine = Statemachine(
+                            state.regions.map {
+                                ScJsonFactory.convert(it, activeStates)
+                            }.toList()
+                    )
+
+            )
+        }
+        if (state.id.startsWith("init", ignoreCase = true)) {
+            return Initial(state.id)
+        }
+        return State(
+                name = state.id,
+                color = getColor(state, activeStates)
+        )
+    }
+
+    private fun getColor(state: org.springframework.statemachine.state.State<String, String>, activeStates: Collection<String>) =
+            if (activeStates.contains(state.id)) "green" else "black"
 }

@@ -14,8 +14,15 @@ open class Node(
 class State(
         name: String,
         color: String? = null,
-        val statemachine: Statemachine?
+        val statemachine: Statemachine? = null
 ) : Node(name, "regular", color)
+
+
+class StateWithRegions(
+        name: String,
+        color: String? = null,
+        val statemachine: Statemachine?
+) : Node(name, "parallel", color)
 
 class Choice(
         name: String,
