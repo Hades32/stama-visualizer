@@ -14,6 +14,12 @@ Showing the current state of your Spring state machine with State Machine Cat
 * Spring Statemachine (UML)
 * Model created with Eclipse Papyrus
 
+# TODOs
+
+* [x] support regions
+* [ ] support region names
+* [ ] support forks & joins
+
 ## Output
 
 ![Model](rendering.png)
