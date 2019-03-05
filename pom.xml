@@ -22,6 +22,12 @@
 
     <dependencies>
         <dependency>
+            <groupId>h32</groupId>
+            <artifactId>ssm-to-smcat</artifactId>
+            <version>1.0-BETA1</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
